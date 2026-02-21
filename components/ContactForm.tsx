@@ -6,94 +6,78 @@ export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setStatus("loading");
+    setLoading(true);
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
+      const res = await fetch(
+        "http://localhost:5678/webhook-test/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+          }),
+        }
+      );
 
-      if (!res.ok) throw new Error("API failed");
+      if (!res.ok) throw new Error("failed");
 
-      setStatus("success");
+      alert("Message sent ✅");
       setName("");
       setEmail("");
       setMessage("");
     } catch (err) {
+      alert("Something went wrong ❌");
       console.error(err);
-      setStatus("error");
     }
+
+    setLoading(false);
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-[#1a1a1a] border border-purple-900 rounded-2xl shadow-2xl p-8 space-y-5"
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-lg mx-auto p-6 space-y-4 bg-black text-purple-300"
+    >
+      <input
+        className="w-full p-2 bg-black border border-purple-700"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+
+      <input
+        className="w-full p-2 bg-black border border-purple-700"
+        placeholder="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+
+      <textarea
+        className="w-full p-2 bg-black border border-purple-700"
+        placeholder="Message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        required
+      />
+
+      <button
+        disabled={loading}
+        className="w-full bg-purple-700 text-white py-2"
       >
-        <h2 className="text-2xl font-bold text-purple-400 text-center">
-          Contact us
-        </h2>
-
-        {/* Name */}
-        <input
-          type="text"
-          placeholder="Your name"
-          className="w-full bg-black text-purple-200 placeholder-purple-500 border border-purple-800 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-700"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-
-        {/* Email */}
-        <input
-          type="email"
-          placeholder="Your email"
-          className="w-full bg-black text-purple-200 placeholder-purple-500 border border-purple-800 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-700"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        {/* Message */}
-        <textarea
-          placeholder="Your message..."
-          className="w-full bg-black text-purple-200 placeholder-purple-500 border border-purple-800 rounded-lg px-4 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-purple-700 resize-none"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          required
-        />
-
-        {/* Button */}
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="w-full bg-purple-700 text-white py-3 rounded-lg font-semibold hover:bg-purple-800 transition disabled:opacity-60"
-        >
-          {status === "loading" ? "Sending..." : "Send message"}
-        </button>
-
-        {/* Status */}
-        {status === "success" && (
-          <p className="text-green-400 text-center font-medium">
-            Message sent successfully ✅
-          </p>
-        )}
-
-        {status === "error" && (
-          <p className="text-red-400 text-center font-medium">
-            Something went wrong ❌
-          </p>
-        )}
-      </form>
-    </div>
+        {loading ? "Sending..." : "Send"}
+      </button>
+    </form>
   );
 }

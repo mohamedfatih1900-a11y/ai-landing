@@ -1,5 +1,5 @@
 "use client";
-
+import LanguageSwitcher from "./LanguageSwitcher";
 export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-black/70 backdrop-blur border-b border-white/10">
@@ -17,6 +17,7 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
+        <LanguageSwitcher />
         <a
           href="#contact"
           className="rounded-full bg-indigo-600 px-5 py-2 text-sm text-white"
