@@ -5,7 +5,7 @@ export default function HowItWorks() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         <h2 className="text-center text-3xl font-bold mb-20">
-          How it works
+          How it works .
         </h2>
 
         <div className="grid md:grid-cols-3 gap-10">

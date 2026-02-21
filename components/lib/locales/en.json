@@ -1,5 +1,10 @@
 {
-  "heroTitle": "Build Your AI Automation",
-  "contactTitle": "Contact Us",
-  "send": "Send Message"
+  "hero": {
+    "title": "Build AI solutions for your business",
+    "subtitle": "We create smart automation systems"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "button": "Send Message"
+  }
 }

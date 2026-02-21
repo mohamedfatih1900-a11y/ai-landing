@@ -8,9 +8,15 @@ type Lang = "en" | "fr";
 
 const translations = { en, fr };
 
-const LanguageContext = createContext<any>(null);
+type LanguageContextType = {
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+  t: any;
+};
 
-export function LanguageProvider({ children }: any) {
+const LanguageContext = createContext<LanguageContextType | null>(null);
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>("en");
 
   const t = translations[lang];
@@ -23,5 +29,9 @@ export function LanguageProvider({ children }: any) {
 }
 
 export function useLanguage() {
-  return useContext(LanguageContext);
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error("useLanguage must be used inside LanguageProvider");
+  }
+  return context;
 }

@@ -3,6 +3,8 @@ export default function Hero() {
   const { t } = useLanguage();
   return (
     <section className="relative overflow-hidden gradient-bg">
+      <h1>{t.hero.title}</h1>
+      <p>{t.hero.subtitle}</p>
       <div className="mx-auto max-w-7xl px-6 py-28 grid lg:grid-cols-2 gap-16 items-center">
         
         {/* Left */}

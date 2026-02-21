@@ -1,5 +1,10 @@
 {
-  "heroTitle": "Créez Votre Automatisation IA",
-  "contactTitle": "Contactez-nous",
-  "send": "Envoyer"
+  "hero": {
+    "title": "Nous créons des systèmes d'IA qui gèrent votre entreprise pour vous.",
+    "subtitle": "Nous créons des systèmes d'automatisation intelligents"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "button": "Envoyer le message"
+  }
 }
